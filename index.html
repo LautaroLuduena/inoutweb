@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InOut Fulfillment Service — Córdoba</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,800;0,900;1,400&display=swap');
+
+  :root{
+    --teal:#0F3D33;
+    --teal-dark:#0b2b24;
+    --red:#C41E3A;
+    --red-dark:#a11830;
+    --charcoal:#24232A;
+    --ink:#1a1a1a;
+    --muted:#5B6B75;
+    --line:#E6ECEB;
+    --bg-soft:#F5F8F7;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Lato', sans-serif;
+    color:#2B2B2E;
+    background:#ffffff;
+    line-height:1.5;
+  }
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+  img,svg{display:block;}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 0;
+  }
+  .logo-lockup{display:flex; align-items:center; gap:10px;}
+  .logo-name{font-size:22px; font-weight:900; line-height:1;}
+  .logo-name .in{color:var(--teal);}
+  .logo-name .out{color:var(--red);}
+  .logo-name .bigo{font-size:27px;}
+  .logo-sub{font-size:7px; letter-spacing:2.5px; color:#1a1a1a; font-weight:700; margin-top:2px;}
+
+  nav.links{display:flex; gap:32px; align-items:center;}
+  nav.links a{font-size:14px; font-weight:700; color:var(--ink); transition:color .15s;}
+  nav.links a:hover{color:var(--red);}
+  .nav-cta{
+    background:var(--red); color:#fff !important; padding:10px 20px; border-radius:8px;
+    font-weight:800 !important; font-size:13px !important;
+  }
+  .nav-cta:hover{background:var(--red-dark); color:#fff;}
+  .burger{display:none; flex-direction:column; gap:4px; cursor:pointer; background:none; border:none; padding:6px;}
+  .burger span{width:24px; height:2.5px; background:var(--ink); border-radius:2px;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    padding:80px 0 70px 0;
+    background:linear-gradient(180deg, #ffffff 0%, #F5F8F7 100%);
+  }
+  .hero-deco{position:absolute; top:-120px; right:-160px; width:520px; height:520px; opacity:.06; pointer-events:none;}
+  .hero-inner{position:relative; display:flex; gap:56px; align-items:center; flex-wrap:wrap;}
+  .hero-copy{flex:1 1 480px;}
+  .eyebrow{
+    display:inline-block; font-size:12px; font-weight:800; letter-spacing:2px;
+    color:var(--red); background:#fdeef0; padding:6px 14px; border-radius:20px; margin-bottom:18px;
+  }
+  h1{font-size:44px; font-weight:900; line-height:1.15; margin:0 0 18px 0; color:var(--ink);}
+  h1 span{color:var(--red);}
+  .hero-copy p.tag{font-size:16px; color:var(--muted); max-width:520px; margin:0 0 30px 0;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; padding:14px 26px; border-radius:9px; font-weight:800; font-size:14.5px;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--red); color:#fff;}
+  .btn-primary:hover{box-shadow:0 10px 24px rgba(196,30,58,.28);}
+  .btn-ghost{background:#fff; color:var(--teal); border:2px solid var(--teal);}
+  .btn-ghost:hover{background:var(--teal); color:#fff;}
+
+  .hero-card{
+    flex:1 1 340px; background:var(--teal); border-radius:16px; padding:34px 30px; color:#fff;
+    box-shadow:0 24px 50px rgba(15,61,51,.25);
+  }
+  .hero-card h3{margin:0 0 18px 0; font-size:15px; letter-spacing:1px; color:#bfe0d6; text-transform:uppercase;}
+  .stat{display:flex; justify-content:space-between; align-items:baseline; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.15);}
+  .stat:last-child{border-bottom:none;}
+  .stat .num{font-size:26px; font-weight:900;}
+  .stat .lbl{font-size:12px; color:#cfe3dc; max-width:170px; text-align:right;}
+
+  /* ---------- section shared ---------- */
+  section{padding:80px 0;}
+  .section-eyebrow{font-size:12px; font-weight:800; letter-spacing:2px; color:var(--red); margin-bottom:10px;}
+  h2.title{font-size:32px; font-weight:900; color:var(--teal); margin:0 0 14px 0;}
+  p.lead{font-size:15.5px; color:var(--muted); max-width:640px; margin:0 0 40px 0;}
+  .center{text-align:center; margin-left:auto; margin-right:auto;}
+
+  /* quienes / que hacemos */
+  .two-col{display:flex; gap:60px; flex-wrap:wrap; align-items:flex-start;}
+  .two-col > div{flex:1 1 400px;}
+  .mini-list{display:flex; flex-direction:column; gap:16px; margin-top:24px;}
+  .mini-list .item{display:flex; gap:14px; align-items:flex-start;}
+  .dot{width:8px; height:8px; border-radius:50%; background:var(--red); margin-top:8px; flex-shrink:0;}
+  .mini-list .item p{margin:0; font-size:14.5px; color:#3a3a3a;}
+  .mini-list .item b{color:var(--ink);}
+
+  /* servicios grid */
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .card{
+    background:var(--bg-soft); border-radius:14px; padding:28px 24px;
+    transition:transform .18s, box-shadow .18s;
+  }
+  .card:hover{transform:translateY(-4px); box-shadow:0 14px 30px rgba(15,61,51,.10);}
+  .num-badge{
+    width:38px; height:38px; min-width:38px; border-radius:50%; background:var(--teal); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:15px; margin-bottom:16px;
+  }
+  .card h3{font-size:17px; margin:0 0 8px 0; color:var(--ink);}
+  .card p{font-size:13.5px; color:var(--muted); margin:0;}
+
+  /* por que elegir - dark */
+  .dark-section{background:var(--charcoal); color:#fff;}
+  .dark-section h2.title{color:#fff;}
+  .dark-section p.lead{color:#c9cdd2;}
+  .grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:26px;}
+  .reason{display:flex; flex-direction:column; gap:14px;}
+  .reason .num-badge{background:var(--red);}
+  .reason h4{font-size:15.5px; margin:0; color:#fff;}
+  .reason p{font-size:13px; color:#b9bfc4; margin:0; line-height:1.55;}
+
+  /* planes */
+  .planes-hero{
+    background:linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+    border-radius:18px; padding:44px 40px; color:#fff; margin-bottom:44px;
+  }
+  .planes-hero h3{font-size:24px; margin:0 0 14px 0;}
+  .planes-hero p{font-size:15px; color:#d9ece6; max-width:720px; margin:0; line-height:1.7;}
+  .dims{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-bottom:56px;}
+  .dim{border:1px solid var(--line); border-radius:14px; padding:28px 24px;}
+  .dim .num-badge{background:var(--red);}
+  .dim h4{font-size:16px; margin:0 0 8px 0; color:var(--ink);}
+  .dim p{font-size:13.5px; color:var(--muted); margin:0;}
+
+  .steps{display:flex; flex-direction:column; gap:22px; max-width:760px;}
+  .step{display:flex; gap:18px; align-items:flex-start;}
+  .step .num-badge{background:var(--teal); flex-shrink:0;}
+  .step p{margin:0; font-size:14.5px; color:#3a3a3a; padding-top:6px;}
+
+  /* contacto */
+  .contact-wrap{display:flex; gap:56px; flex-wrap:wrap;}
+  .contact-info{flex:1 1 320px;}
+  .contact-info .item{margin-bottom:22px;}
+  .contact-info .item h4{font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin:0 0 4px 0;}
+  .contact-info .item p{font-size:16px; font-weight:700; color:var(--ink); margin:0;}
+  .contact-form{flex:1 1 420px; background:var(--bg-soft); border-radius:16px; padding:36px;}
+  .form-row{margin-bottom:18px;}
+  .form-row label{display:block; font-size:13px; font-weight:700; color:var(--ink); margin-bottom:6px;}
+  .form-row input, .form-row select, .form-row textarea{
+    width:100%; padding:12px 14px; border-radius:8px; border:1px solid #D9E1DF; font-family:inherit; font-size:14px;
+    background:#fff;
+  }
+  .form-row textarea{resize:vertical; min-height:90px;}
+  .form-two{display:flex; gap:14px;}
+  .form-two > div{flex:1;}
+  .submit-btn{
+    width:100%; background:var(--red); color:#fff; border:none; padding:15px; border-radius:9px;
+    font-weight:800; font-size:15px; cursor:pointer; transition:background .15s;
+  }
+  .submit-btn:hover{background:var(--red-dark);}
+  .form-note{font-size:11.5px; color:#8b9296; margin-top:12px; text-align:center;}
+  .success-msg{
+    display:none; background:#e8f6f0; border:1px solid #bfe4d2; color:var(--teal);
+    padding:16px; border-radius:9px; font-size:14px; font-weight:700; text-align:center;
+  }
+
+  /* footer */
+  footer{background:#fff; border-top:1px solid var(--line); padding:30px 0;}
+  .footer-inner{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+  .footer-inner p{font-size:12.5px; color:var(--muted); margin:0;}
+
+  @media (max-width:860px){
+    .grid-3{grid-template-columns:1fr 1fr;}
+    .grid-4{grid-template-columns:1fr 1fr;}
+    .dims{grid-template-columns:1fr;}
+    h1{font-size:34px;}
+    nav.links{
+      display:none; position:absolute; top:100%; left:0; right:0;
+      background:#fff; flex-direction:column; gap:0; padding:10px 24px 18px 24px;
+      border-bottom:1px solid var(--line); box-shadow:0 12px 20px rgba(0,0,0,.06);
+    }
+    nav.links a{padding:12px 0; border-bottom:1px solid var(--line); width:100%;}
+    nav.links.mobile-open{display:flex;}
+    .burger{display:flex;}
+  }
+  @media (max-width:560px){
+    .grid-3{grid-template-columns:1fr;}
+    .grid-4{grid-template-columns:1fr;}
+    .form-two{flex-direction:column;}
+    section{padding:56px 0;}
+    .hero{padding:56px 0 46px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo-lockup">
+      <svg width="34" height="34" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <g transform="rotate(45 12 12)">
+          <path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8A5.87 5.87 0 016 12c0-3.31 2.69-6 6-6z" fill="#3A3238"/>
+          <path d="M18.76 7.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z" fill="#C41E3A"/>
+        </g>
+      </svg>
+      <div>
+        <div class="logo-name"><span class="in">In</span><span class="out bigo">O</span><span class="out">ut</span></div>
+        <div class="logo-sub">FULFILLMENT SERVICE</div>
+      </div>
+    </div>
+    <nav class="links">
+      <a href="#servicios">Servicios</a>
+      <a href="#porque">Por qué elegirnos</a>
+      <a href="#planes">Planes</a>
+      <a href="#contacto" class="nav-cta">Cotizar mi plan</a>
+    </nav>
+    <button class="burger" onclick="document.querySelector('.links').classList.toggle('mobile-open')" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="hero-deco" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <g transform="rotate(45 12 12)">
+      <path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8A5.87 5.87 0 016 12c0-3.31 2.69-6 6-6z" fill="#0F3D33"/>
+      <path d="M18.76 7.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z" fill="#C41E3A"/>
+    </g>
+  </svg>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow">FULFILLMENT EN CÓRDOBA</span>
+      <h1>Logística inteligente para <span>tu e-commerce</span>, sin que tengas que operarla vos</h1>
+      <p class="tag">Recibimos, guardamos y despachamos tus pedidos con visibilidad en tiempo real y un plan armado a medida de tu negocio — sin mínimos ni contratos rígidos.</p>
+      <div class="hero-ctas">
+        <a href="#contacto" class="btn btn-primary">Quiero mi plan a medida</a>
+        <a href="#servicios" class="btn btn-ghost">Ver servicios</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>El e-commerce argentino</h3>
+      <div class="stat"><span class="num">$35,3 B</span><span class="lbl">Facturación 2025 (+60%)</span></div>
+      <div class="stat"><span class="num">25 M</span><span class="lbl">Compradores online</span></div>
+      <div class="stat"><span class="num">+14,1%</span><span class="lbl">Crecimiento proyectado 2026</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="quienes">
+  <div class="wrap two-col">
+    <div>
+      <div class="section-eyebrow">QUIÉNES SOMOS</div>
+      <h2 class="title">Un operador de fulfillment pensado para el e-commerce que viene</h2>
+      <p style="font-size:14.5px; color:#3a3a3a; line-height:1.75; max-width:520px;">
+        InOut nace en Córdoba para acompañar el crecimiento del e-commerce argentino. Comenzamos en alianza con un grupo
+        logístico ya instalado en la ciudad, lo que nos permite ofrecer un servicio profesional desde el primer pedido,
+        con la tecnología y la flexibilidad de un operador pensado para escalar: más rápido, más transparente y más
+        cercano a cada marca que confía en nosotros.
+      </p>
+    </div>
+    <div>
+      <div class="section-eyebrow">QUÉ HACEMOS</div>
+      <h2 class="title" style="font-size:26px;">Todo el ciclo logístico de tu tienda, en un solo lugar</h2>
+      <div class="mini-list">
+        <div class="item"><div class="dot"></div><p><b>Recibimos</b> tu mercadería con control de calidad y conteo de stock.</p></div>
+        <div class="item"><div class="dot"></div><p><b>Almacenamos</b> de forma ordenada y trazable, visible en tiempo real.</p></div>
+        <div class="item"><div class="dot"></div><p><b>Preparamos</b> cada pedido a medida que se genera en tu tienda.</p></div>
+        <div class="item"><div class="dot"></div><p><b>Despachamos</b> hasta la puerta de tu comprador, con couriers aliados.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios" style="background:var(--bg-soft);">
+  <div class="wrap">
+    <div class="section-eyebrow center">NUESTROS SERVICIOS</div>
+    <h2 class="title center">Todo lo que tu operación necesita</h2>
+    <p class="lead center">Seis piezas, un solo proveedor de confianza.</p>
+    <div class="grid-3">
+      <div class="card"><div class="num-badge">1</div><h3>Recepción de mercadería</h3><p>Ingreso, control de calidad y conteo de stock proveniente de proveedores o importaciones.</p></div>
+      <div class="card"><div class="num-badge">2</div><h3>Almacenamiento</h3><p>Inventario con codificación y ubicación por pallet, con stock visible en tiempo real.</p></div>
+      <div class="card"><div class="num-badge">3</div><h3>Picking &amp; packing</h3><p>Preparación de cada pedido a medida que se genera en tu tienda online o marketplace.</p></div>
+      <div class="card"><div class="num-badge">4</div><h3>Despacho y última milla</h3><p>Integración con correos, couriers y flota aliada para la entrega final al comprador.</p></div>
+      <div class="card"><div class="num-badge">5</div><h3>Logística inversa</h3><p>Gestionamos tus devoluciones como parte del servicio, no como un trámite aparte.</p></div>
+      <div class="card"><div class="num-badge">6</div><h3>Portal de cliente</h3><p>Panel web donde ves tu stock, tus pedidos despachados y el estado de cada envío.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="porque" class="dark-section">
+  <div class="wrap">
+    <div class="section-eyebrow center">POR QUÉ ELEGIR FULFILLMENT</div>
+    <h2 class="title center">Por qué elegir InOut</h2>
+    <p class="lead center">Cuatro razones por las que marcas y pymes tercerizan su logística con nosotros.</p>
+    <div class="grid-4">
+      <div class="reason"><div class="num-badge">1</div><h4>Sin inversión ni riesgo</h4><p>Tercerizás depósito, personal y logística sin comprometer capital propio ni asumir costos fijos.</p></div>
+      <div class="reason"><div class="num-badge">2</div><h4>Visibilidad total</h4><p>Accedés en tiempo real a tu inventario y al estado de cada pedido, sin planillas ni llamados.</p></div>
+      <div class="reason"><div class="num-badge">3</div><h4>Devoluciones resueltas</h4><p>Gestionamos la logística inversa como parte del servicio, no como un trámite aparte.</p></div>
+      <div class="reason"><div class="num-badge">4</div><h4>Flexibilidad para crecer</h4><p>Sin mínimos de volumen ni contratos rígidos: escalás según tu operación, sin quedar atado.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="planes">
+  <div class="wrap">
+    <div class="section-eyebrow">PLANES A MEDIDA</div>
+    <h2 class="title">Cada negocio es distinto — por eso no vendemos un plan único</h2>
+    <div class="planes-hero">
+      <h3>Un servicio diseñado alrededor de tu operación</h3>
+      <p>No creemos en el "plan cerrado que casi te sirve". Armamos tu propuesta según tres variables reales de tu negocio:
+      cuánto espacio necesitás, con qué frecuencia recibís mercadería y cuántos pedidos despachás por mes. Vos pagás por
+      lo que realmente usás, sin mínimos forzados.</p>
+    </div>
+    <div class="dims">
+      <div class="dim"><div class="num-badge">1</div><h4>Espacio de almacenamiento</h4><p>Medido por pallet: definimos juntos cuántas posiciones necesita tu stock, con margen para tus picos de temporada.</p></div>
+      <div class="dim"><div class="num-badge">2</div><h4>Frecuencia de recepción</h4><p>Ajustada a tus tiempos de reposición: desde ingresos esporádicos hasta reposición semanal o diaria.</p></div>
+      <div class="dim"><div class="num-badge">3</div><h4>Volumen de despacho</h4><p>Tu plan crece o baja con la cantidad real de pedidos que despachás cada mes, sin sorpresas.</p></div>
+    </div>
+    <h3 style="font-size:20px; color:var(--ink); margin-bottom:20px;">Cómo armamos tu propuesta</h3>
+    <div class="steps">
+      <div class="step"><div class="num-badge">1</div><p><b>Nos contás tu operación:</b> volumen de ventas, tipo de producto y estacionalidad.</p></div>
+      <div class="step"><div class="num-badge">2</div><p><b>Diseñamos un plan a medida:</b> con el espacio, las recepciones y los despachos que tu negocio necesita hoy.</p></div>
+      <div class="step"><div class="num-badge">3</div><p><b>Lo revisamos juntos cada mes:</b> tu plan se ajusta con vos, sin permanencia mínima ni letra chica.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" style="background:var(--bg-soft);">
+  <div class="wrap contact-wrap">
+    <div class="contact-info">
+      <div class="section-eyebrow">CONTACTO</div>
+      <h2 class="title" style="font-size:28px;">Charlemos y armemos tu plan a medida</h2>
+      <p style="font-size:14.5px; color:var(--muted); max-width:420px; margin-bottom:30px;">
+        Contanos sobre tu operación y te respondemos con una propuesta ajustada a tu volumen real, sin compromiso.
+      </p>
+      <div class="item"><h4>Email</h4><p>info@inoutfulfillment.com</p></div>
+      <div class="item"><h4>Teléfono</h4><p>+54 9 3515918555</p></div>
+      <div class="item"><h4>Ubicación</h4><p>Córdoba, Argentina</p></div>
+    </div>
+
+    <div class="contact-form">
+      <form id="leadForm" onsubmit="return handleSubmit(event)">
+        <div class="form-row">
+          <label for="nombre">Nombre y apellido</label>
+          <input type="text" id="nombre" required placeholder="Tu nombre">
+        </div>
+        <div class="form-two">
+          <div class="form-row">
+            <label for="empresa">Marca / empresa</label>
+            <input type="text" id="empresa" placeholder="Nombre de tu tienda">
+          </div>
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" required placeholder="tu@email.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="volumen">Pedidos aproximados por mes</label>
+          <select id="volumen">
+            <option>Menos de 100</option>
+            <option>100 – 500</option>
+            <option>500 – 1.500</option>
+            <option>Más de 1.500</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="mensaje">Contanos sobre tu operación</label>
+          <textarea id="mensaje" placeholder="Tipo de producto, volumen de stock, frecuencia de reposición..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Quiero mi plan a medida</button>
+        <p class="form-note">Al enviar, te contactamos por email en menos de 48hs.</p>
+      </form>
+      <div class="success-msg" id="successMsg">¡Gracias! Recibimos tu consulta y te vamos a contactar a la brevedad.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <p>© 2026 InOut Fulfillment Service — Córdoba, Argentina</p>
+    <p>info@inoutfulfillment.com · +54 9 3515918555</p>
+  </div>
+</footer>
+
+<script>
+  function handleSubmit(e){
+    e.preventDefault();
+    document.getElementById('leadForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+    return false;
+  }
+</script>
+
+</body>
+</html>
